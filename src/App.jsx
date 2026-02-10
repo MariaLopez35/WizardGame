@@ -157,9 +157,44 @@ function DifficultyLevel() {
             <i className="fa-solid fa-crown icons"></i> Nivel Dios
           </button>
         </div>
-
-        <button className="next-btn">Siguiente</button>
+        <Link to="/gaming-platform">
+          <button className="next-btn">Siguiente</button>
+        </Link>
       </div>
+    </section>
+  );
+}
+
+function GamingPlatform() {
+  return (
+    <section className="wizard-step">
+      <h2 className="step-title">PASO 5</h2>
+      <h1 className="step-subtitle">Plataforma</h1>
+      <p className="step-question">¿En qué plataforma quieres jugar?</p>
+
+      <div className="options-grid">
+        <button className="time-card">
+          <i className="fa-brands fa-windows icons"></i>
+          PC
+        </button>
+
+        <button className="time-card">
+          <i className="fa-brands fa-playstation icons"></i>
+          PlayStation
+        </button>
+
+        <button className="time-card">
+          <i className="fa-brands fa-xbox icons"></i>
+          Xbox
+        </button>
+
+        <button className="time-card">
+          <i className="fa-solid fa-gamepad icons"></i>
+          Switch
+        </button>
+      </div>
+
+      <button className="next-btn">¡Vamos a jugar!</button>
     </section>
   );
 }
@@ -189,6 +224,7 @@ function App() {
         <Route path="/mental-energy" element={<MentalEnergy />} />
         <Route path="/game-type" element={<GameplayType />} />
         <Route path="/difficulty-level" element={<DifficultyLevel />} />
+        <Route path="/gaming-platform" element={<GamingPlatform />} />
       </Routes>
     </>
   );
