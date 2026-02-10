@@ -99,7 +99,36 @@ function MentalEnergy() {
   );
 }
 
+function GameplayType() {
+  return (
+    <section className="wizard-step">
+      <div className="wizard">
+        <div className="wizard__content">
+          <h2 className="step-title">PASO 3</h2>
+          <h1 className="step-subtitle">Tipo de Experiencia</h1>
+          <p className="step-question">¿Cómo quieres jugar?</p>
+        </div>
 
+        <div className="options-grid">
+          <button className="time-card">
+            <i className="fa-solid fa-user icons"></i> Solo
+          </button>
+
+          <button className="time-card">
+            <i className="fa-solid fa-users icons"></i> Multijugador
+          </button>
+
+          <button className="time-card">
+            <i className="fa-solid fa-handshake icons"></i> Cooperativo
+          </button>
+        </div>
+        <Link to="/difficulty-level">
+          <button className="next-btn">Siguiente</button>
+        </Link>
+      </div>
+    </section>
+  );
+}
 
 function App() {
   const [pulsed, setPulsed] = useState(true);
@@ -124,7 +153,7 @@ function App() {
         />
         <Route path="/time-available" element={<TimeAvalaible />} />
         <Route path="/mental-energy" element={<MentalEnergy />} />
-        
+        <Route path="/game-type" element={<GameplayType />} />        
       </Routes>
     </>
   );
