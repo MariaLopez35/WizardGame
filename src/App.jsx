@@ -130,6 +130,40 @@ function GameplayType() {
   );
 }
 
+function DifficultyLevel() {
+  return (
+    <section className="wizard-step">
+      <div className="wizard">
+        <div className="wizard__content">
+          <h2 className="step-title">PASO 4</h2>
+          <h1 className="step-subtitle">Dificultad</h1>
+          <p className="step-question">¿Qué nivel de dificultad prefieres?</p>
+        </div>
+
+        <div className="options-grid">
+          <button className="time-card">
+            <i className="fa-solid fa-star icons"></i> Fácil
+          </button>
+
+          <button className="time-card">
+            <i className="fa-solid fa-star-half-stroke icons"></i> Media
+          </button>
+
+          <button className="time-card">
+            <i className="fa-solid fa-skull icons"></i> Difícil
+          </button>
+
+          <button className="time-card">
+            <i className="fa-solid fa-crown icons"></i> Nivel Dios
+          </button>
+        </div>
+
+        <button className="next-btn">Siguiente</button>
+      </div>
+    </section>
+  );
+}
+
 function App() {
   const [pulsed, setPulsed] = useState(true);
 
@@ -153,7 +187,8 @@ function App() {
         />
         <Route path="/time-available" element={<TimeAvalaible />} />
         <Route path="/mental-energy" element={<MentalEnergy />} />
-        <Route path="/game-type" element={<GameplayType />} />        
+        <Route path="/game-type" element={<GameplayType />} />
+        <Route path="/difficulty-level" element={<DifficultyLevel />} />
       </Routes>
     </>
   );
