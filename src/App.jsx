@@ -30,6 +30,7 @@ function HeroSection({ handleStart }) {
 }
 
 function TimeAvalaible() {
+
   return (
     <>
       <section className="wizard-step">
@@ -38,21 +39,21 @@ function TimeAvalaible() {
         <p className="step-question">¿Cuánto tiempo tienes para jugar?</p>
 
         <div className="options-grid">
-          <button className="time-card">
+          <button value="15 min" className="time-card" >
             <i className="fa-solid fa-clock icons"></i>
             15 min
           </button>
 
-          <button className="time-card">
+          <button value="30 min" className="time-card">
             <i className="fa-solid fa-clock icons"></i>
             30 min
           </button>
 
-          <button className="time-card">
+          <button value="1 hora" className="time-card">
             <i className="fa-solid fa-clock icons"></i>1 hora
           </button>
 
-          <button className="time-card">
+          <button value="Mas de 2 horas" className="time-card">
             <i className="fa-solid fa-clock icons"></i>
             Más de 2 horas
           </button>
@@ -193,8 +194,72 @@ function GamingPlatform() {
           Switch
         </button>
       </div>
+      <Link to="/results">
+        <button className="next-btn">¡Vamos a jugar!</button>
+      </Link>
+    </section>
+  );
+}
 
-      <button className="next-btn">¡Vamos a jugar!</button>
+function Results() {
+  return (
+    <section className="wizard-step results-page">
+      <h2 className="step-title glow-text">¡Recomendaciones listas!</h2>
+      <h1 className="step-subtitle">Juegos recomendados para ti</h1>
+
+      <div className="results-grid">
+        <div className="result-card neon-blue">
+          <img src={logo} alt="CyberQuest" className="card-img" />
+          <div className="card-info">
+            <h3>CyberQuest</h3>
+            <p>
+              Un juego de acción y aventura pensado para tu energía y tiempo
+              disponible.
+            </p>
+            <span className="platform-tag">
+              <i className="fa-solid fa-gamepad"></i> PC
+            </span>
+          </div>
+        </div>
+
+        <div className="result-card neon-purple">
+          <img
+            src="/images/galaxy-fighters.jpg"
+            alt="Galaxy Fighters"
+            className="card-img"
+          />
+          <div className="card-info">
+            <h3>Galaxy Fighters</h3>
+            <p>Acción cooperativa online, ideal para partidas rápidas.</p>
+            <span className="platform-tag">
+              <i className="fa-solid fa-gamepad"></i> PlayStation
+            </span>
+          </div>
+        </div>
+
+        <div className="result-card neon-orange">
+          <img
+            src="/images/kingdom-story.jpg"
+            alt="Kingdom Story"
+            className="card-img"
+          />
+          <div className="card-info">
+            <h3>Kingdom Story</h3>
+            <p>Perfecto para relajarte y explorar mundos de fantasía.</p>
+            <span className="platform-tag">
+              <i className="fa-solid fa-gamepad"></i> Switch
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p className="step-text">
+        Estas recomendaciones se basan en tu tiempo disponible, tu energía
+        mental y tu tipo de experiencia preferida.
+      </p>
+      <Link to="/">
+        <button className="next-btn neon-button">Buscar otra vez</button>
+      </Link>
     </section>
   );
 }
@@ -225,6 +290,7 @@ function App() {
         <Route path="/game-type" element={<GameplayType />} />
         <Route path="/difficulty-level" element={<DifficultyLevel />} />
         <Route path="/gaming-platform" element={<GamingPlatform />} />
+        <Route path="/results" element={<Results />} />
       </Routes>
     </>
   );
