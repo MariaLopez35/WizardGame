@@ -157,7 +157,6 @@
   transform: scale(1.05);
 }
 
-/* Opcional: efecto cuando está activo y haces hover */
 .time-card.active:hover {
   transform: scale(1.08);
   box-shadow: 
