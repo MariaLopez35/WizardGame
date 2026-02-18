@@ -143,11 +143,25 @@
   max-width: calc(50% - 20px);
 }
 
-
-
 .time-card:hover {
   background: linear-gradient(90deg, #3a0ca3, #1b263b); 
   transform: translateY(-4px);
+}
+
+.time-card.active {
+  background: linear-gradient(90deg, #3a0ca3, #1b263b);
+  border: 2px solid #00d4ff;
+  box-shadow: 
+    0 0 10px #00d4ff,
+    0 0 20px #3a0ca3aa;
+  transform: scale(1.05);
+}
+
+.time-card.active:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    0 0 15px #00d4ff,
+    0 0 30px #3a0ca3;
 }
 
 .next-btn {

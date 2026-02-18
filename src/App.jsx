@@ -29,44 +29,45 @@ function HeroSection({ handleStart }) {
   );
 }
 
-function TimeAvalaible() {
+function TimeAvalaible({ wizardData, setWizardData }) {
+  const times = ["15 min", "30 min", "1 hora", "Más de 2 horas"];
 
   return (
-    <>
-      <section className="wizard-step">
-        <h2 className="step-title">PASO 1</h2>
-        <h1 className="step-subtitle">Tiempo disponible</h1>
-        <p className="step-question">¿Cuánto tiempo tienes para jugar?</p>
+    <section className="wizard-step">
+      <h2 className="step-title">PASO 1</h2>
+      <h1 className="step-subtitle">Tiempo disponible</h1>
+      <p className="step-question">¿Cuánto tiempo tienes para jugar?</p>
 
-        <div className="options-grid">
-          <button value="15 min" className="time-card" >
+      <div className="options-grid">
+        {times.map((duration) => (
+          <button
+            key={duration}
+            onClick={() =>
+              setWizardData((currentWizardData) => ({ ...currentWizardData, time: duration }))
+            }
+            className={`time-card ${wizardData.time === duration ? "active" : ""}`}
+          >
             <i className="fa-solid fa-clock icons"></i>
-            15 min
+            {duration}
           </button>
+        ))}
+      </div>
 
-          <button value="30 min" className="time-card">
-            <i className="fa-solid fa-clock icons"></i>
-            30 min
-          </button>
-
-          <button value="1 hora" className="time-card">
-            <i className="fa-solid fa-clock icons"></i>1 hora
-          </button>
-
-          <button value="Mas de 2 horas" className="time-card">
-            <i className="fa-solid fa-clock icons"></i>
-            Más de 2 horas
-          </button>
-        </div>
-        <Link to="/mental-energy">
-          <button className="next-btn">Siguiente</button>
-        </Link>
-      </section>
-    </>
+      <Link to="/mental-energy">
+        <button className="next-btn">Siguiente</button>
+      </Link>
+    </section>
   );
 }
 
-function MentalEnergy() {
+function MentalEnergy({ wizardData, setWizardData }) {
+  const energies = [
+    { label: "Relajado", icon: "fa-solid fa-spa" },
+    { label: "Normal", icon: "fa-regular fa-face-smile" },
+    { label: "Con energía", icon: "fa-solid fa-bolt" },
+    { label: "A tope", icon: "fa-solid fa-fire" },
+  ];
+
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 2</h2>
@@ -74,25 +75,20 @@ function MentalEnergy() {
       <p className="step-question">¿Cómo está tu energía mental ahora?</p>
 
       <div className="options-grid">
-        <button className="time-card">
-          <i className="fa-solid fa-spa icons"></i>
-          Relajado
-        </button>
-
-        <button className="time-card">
-          <i className="fa-regular fa-face-smile icons"></i>
-          Normal
-        </button>
-
-        <button className="time-card">
-          <i className="fa-solid fa-bolt icons"></i>
-          Con energía
-        </button>
-
-        <button className="time-card">
-          <i className="fa-solid fa-fire icons"></i>A tope
-        </button>
+        {energies.map((energy) => (
+          <button
+            key={energy.label}
+            onClick={() =>
+              setWizardData((currentWizardData) => ({ ...currentWizardData, energy: energy.label }))
+            }
+            className={`time-card ${wizardData.energy === energy.label ? "active" : ""}`}
+          >
+            <i className={`${energy.icon} icons`}></i>
+            {energy.label}
+          </button>
+        ))}
       </div>
+
       <Link to="/game-type">
         <button className="next-btn">Siguiente</button>
       </Link>
@@ -100,73 +96,84 @@ function MentalEnergy() {
   );
 }
 
-function GameplayType() {
+function GameplayType({ wizardData, setWizardData }) {
+  const gameOptions = [
+    { label: "Solo", icon: "fa-solid fa-user" },
+    { label: "Multijugador", icon: "fa-solid fa-users" },
+    { label: "Cooperativo", icon: "fa-solid fa-handshake" },
+  ];
+
   return (
     <section className="wizard-step">
-      <div className="wizard">
-        <div className="wizard__content">
-          <h2 className="step-title">PASO 3</h2>
-          <h1 className="step-subtitle">Tipo de Experiencia</h1>
-          <p className="step-question">¿Cómo quieres jugar?</p>
-        </div>
+      <h2 className="step-title">PASO 3</h2>
+      <h1 className="step-subtitle">Tipo de Experiencia</h1>
+      <p className="step-question">¿Cómo quieres jugar?</p>
 
-        <div className="options-grid">
-          <button className="time-card">
-            <i className="fa-solid fa-user icons"></i> Solo
+      <div className="options-grid">
+        {gameOptions.map((type) => (
+          <button
+            key={type.label}
+            onClick={() =>
+              setWizardData((currentWizardData) => ({ ...currentWizardData, gameType: type.label }))
+            }
+            className={`time-card ${wizardData.gameType === type.label ? "active" : ""}`}
+          >
+            <i className={`${type.icon} icons`}></i> {type.label}
           </button>
-
-          <button className="time-card">
-            <i className="fa-solid fa-users icons"></i> Multijugador
-          </button>
-
-          <button className="time-card">
-            <i className="fa-solid fa-handshake icons"></i> Cooperativo
-          </button>
-        </div>
-        <Link to="/difficulty-level">
-          <button className="next-btn">Siguiente</button>
-        </Link>
+        ))}
       </div>
+
+      <Link to="/difficulty-level">
+        <button className="next-btn">Siguiente</button>
+      </Link>
     </section>
   );
 }
 
-function DifficultyLevel() {
+function DifficultyLevel({ wizardData, setWizardData }) {
+  const difficultyOptions = [
+    { label: "Fácil", icon: "fa-solid fa-star" },
+    { label: "Media", icon: "fa-solid fa-star-half-stroke" },
+    { label: "Difícil", icon: "fa-solid fa-skull" },
+    { label: "Nivel Dios", icon: "fa-solid fa-crown" },
+  ];
+
   return (
     <section className="wizard-step">
-      <div className="wizard">
-        <div className="wizard__content">
-          <h2 className="step-title">PASO 4</h2>
-          <h1 className="step-subtitle">Dificultad</h1>
-          <p className="step-question">¿Qué nivel de dificultad prefieres?</p>
-        </div>
+      <h2 className="step-title">PASO 4</h2>
+      <h1 className="step-subtitle">Dificultad</h1>
+      <p className="step-question">¿Qué nivel de dificultad prefieres?</p>
 
-        <div className="options-grid">
-          <button className="time-card">
-            <i className="fa-solid fa-star icons"></i> Fácil
+      <div className="options-grid">
+        {difficultyOptions.map((difficulty) => (
+          <button
+            key={difficulty.label}
+            onClick={() =>
+              setWizardData((currentWizardData) => ({ ...currentWizardData, difficulty: difficulty.label }))
+            }
+            className={`time-card ${wizardData.difficulty === difficulty.label ? "active" : ""}`}
+          >
+            <i className={`${difficulty.icon} icons`}></i> {difficulty.label}
           </button>
-
-          <button className="time-card">
-            <i className="fa-solid fa-star-half-stroke icons"></i> Media
-          </button>
-
-          <button className="time-card">
-            <i className="fa-solid fa-skull icons"></i> Difícil
-          </button>
-
-          <button className="time-card">
-            <i className="fa-solid fa-crown icons"></i> Nivel Dios
-          </button>
-        </div>
-        <Link to="/gaming-platform">
-          <button className="next-btn">Siguiente</button>
-        </Link>
+        ))}
       </div>
+
+      <Link to="/gaming-platform">
+        <button className="next-btn">Siguiente</button>
+      </Link>
     </section>
   );
 }
 
-function GamingPlatform() {
+function GamingPlatform({ wizardData, setWizardData }) {
+  
+  const platformOptions = [
+    { label: "PC", icon: "fa-brands fa-windows" },
+    { label: "PlayStation", icon: "fa-brands fa-playstation" },
+    { label: "Xbox", icon: "fa-brands fa-xbox" },
+    { label: "Switch", icon: "fa-solid fa-gamepad" },
+  ];
+
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 5</h2>
@@ -174,26 +181,19 @@ function GamingPlatform() {
       <p className="step-question">¿En qué plataforma quieres jugar?</p>
 
       <div className="options-grid">
-        <button className="time-card">
-          <i className="fa-brands fa-windows icons"></i>
-          PC
-        </button>
-
-        <button className="time-card">
-          <i className="fa-brands fa-playstation icons"></i>
-          PlayStation
-        </button>
-
-        <button className="time-card">
-          <i className="fa-brands fa-xbox icons"></i>
-          Xbox
-        </button>
-
-        <button className="time-card">
-          <i className="fa-solid fa-gamepad icons"></i>
-          Switch
-        </button>
+        {platformOptions.map((platform) => (
+          <button
+            key={platform.label}
+            onClick={() =>
+              setWizardData((currentWizardData) => ({ ...currentWizardData, platform: platform.label }))
+            }
+            className={`time-card ${wizardData.platform === platform.label ? "active" : ""}`}
+          >
+            <i className={`${platform.icon} icons`}></i> {platform.label}
+          </button>
+        ))}
       </div>
+
       <Link to="/results">
         <button className="next-btn">¡Vamos a jugar!</button>
       </Link>
@@ -201,7 +201,7 @@ function GamingPlatform() {
   );
 }
 
-function Results() {
+function Results({ wizardData }) {
   return (
     <section className="wizard-step results-page">
       <h2 className="step-title glow-text">¡Recomendaciones listas!</h2>
@@ -267,6 +267,14 @@ function Results() {
 function App() {
   const [pulsed, setPulsed] = useState(true);
 
+  const [wizardData, setWizardData] = useState({
+    time: "",
+    energy: "",
+    gameType: "",
+    difficulty: "",
+    platform: ""
+  });
+
   const handleStart = () => {
     setPulsed(false);
   };
@@ -285,15 +293,31 @@ function App() {
             )
           }
         />
-        <Route path="/time-available" element={<TimeAvalaible />} />
-        <Route path="/mental-energy" element={<MentalEnergy />} />
-        <Route path="/game-type" element={<GameplayType />} />
-        <Route path="/difficulty-level" element={<DifficultyLevel />} />
-        <Route path="/gaming-platform" element={<GamingPlatform />} />
-        <Route path="/results" element={<Results />} />
+        <Route
+          path="/time-available"
+          element={<TimeAvalaible wizardData={wizardData} setWizardData={setWizardData} />}
+        />
+        <Route
+          path="/mental-energy"
+          element={<MentalEnergy wizardData={wizardData} setWizardData={setWizardData} />}
+        />
+        <Route
+          path="/game-type"
+          element={<GameplayType wizardData={wizardData} setWizardData={setWizardData} />}
+        />
+        <Route
+          path="/difficulty-level"
+          element={<DifficultyLevel wizardData={wizardData} setWizardData={setWizardData} />}
+        />
+        <Route
+          path="/gaming-platform"
+          element={<GamingPlatform wizardData={wizardData} setWizardData={setWizardData} />}
+        />
+        <Route path="/results" element={<Results wizardData={wizardData} />} />
       </Routes>
     </>
   );
 }
+
 
 export default App;
