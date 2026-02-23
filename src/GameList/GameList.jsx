@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getGames } from "../Services/services";
 import "./GameList.css";
 import { Link } from "react-router-dom";
+import { gameContext } from "../Context/gameContext";
 
-function GameList({ wizardData, times, energies, difficultyOptions }) {
+function GameList() {
   const genreGames = ["puzzle", "action", "rpg"];
   const [games, setGames] = useState([]);
+  const { wizardData, times, energies, difficultyOptions } =
+    useContext(gameContext);
 
   useEffect(() => {
     const fetchData = async () => {

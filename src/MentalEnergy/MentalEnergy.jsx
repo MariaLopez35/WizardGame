@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { gameContext } from "../Context/gameContext";
 
-function MentalEnergy({ wizardData, setWizardData, energies }) {
+function MentalEnergy() {
+  const { wizardData, setWizardData, energies } = useContext(gameContext);
+
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 2</h2>
