@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { gameContext } from "../Context/gameContext";
 
-function GamingPlatform({ wizardData, setWizardData }) {
-  const platformOptions = [
-    { label: "PC", icon: "fa-brands fa-windows" },
-    { label: "PlayStation", icon: "fa-brands fa-playstation" },
-    { label: "Xbox", icon: "fa-brands fa-xbox" },
-    { label: "Switch", icon: "fa-solid fa-gamepad" },
-  ];
+function GamingPlatform() {
+  const { wizardData, setWizardData, platformOptions } =
+    useContext(gameContext);
 
   return (
     <section className="wizard-step">

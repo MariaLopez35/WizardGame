@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { gameContext } from "../Context/gameContext";
 
-function GamePlayType({ wizardData, setWizardData }) {
-  const gameOptions = [
-    { label: "Solo", icon: "fa-solid fa-user", type: "singleplayer" },
-    { label: "Multijugador", icon: "fa-solid fa-users", type: "multiplayer" },
-    {
-      label: "Cooperativo",
-      icon: "fa-solid fa-handshake",
-      type: "cooperative",
-    },
-  ];
+function GamePlayType() {
+  const { wizardData, setWizardData, gameOptions } = useContext(gameContext);
 
   return (
     <section className="wizard-step">

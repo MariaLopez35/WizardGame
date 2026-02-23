@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { gameContext } from "../Context/gameContext";
 
-function DifficultyLevel({ wizardData, setWizardData, difficultyOptions }) {
+function DifficultyLevel() {
+  const { wizardData, setWizardData, difficultyOptions } =
+    useContext(gameContext);
+
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 4</h2>
