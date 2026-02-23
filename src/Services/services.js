@@ -1,5 +1,6 @@
+const apiKey = import.meta.env.VITE_API_KEY;
 const API_URL =
-  "https://api.rawg.io/api/games?key=3dde0f83638746ada05fba1a2d37cb5f";
+  `https://api.rawg.io/api/games?key=${apiKey}`;
 
 export const getGames = async () => {
   const response = await fetch(API_URL, { cache: "no-store" });
