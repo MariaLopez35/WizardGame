@@ -206,37 +206,43 @@ function GamingPlatform({ wizardData, setWizardData }) {
 
 function Results({ wizardData, times, energies, difficultyOptions }) {
   const genreGames = ["puzzle", "action", "rpg"];
-
   const [games, setGames] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const genreNames = genreGames.map((g) => g);
       const data = await getGames();
 
-      const filteredGames = data.filter(
-        (game) =>
-          game.genres.some((g) => genreNames.includes(g.slug)) &&
+      const filteredGames = data.filter((game) => {
+        return (
+          game.genres.some((g) => genreGames.includes(g.slug)) &&
           game.tags.some((tag) => tag.slug === wizardData.gameType) &&
           times.includes(wizardData.time) &&
-          energies.some((e) => e.label === wizardData.energy) &&
-          difficultyOptions.some((d) => d.label === wizardData.difficulty),
-      );
+          energies.some((energy) => energy.label === wizardData.energy) &&
+          difficultyOptions.some(
+            (difficulty) => difficulty.label === wizardData.difficulty
+          )
+        );
+      });
 
       setGames(filteredGames.slice(0, 3));
     };
 
     fetchData();
-  }, [wizardData]);
+  }, []);
 
   const getPlatforms = (platforms) => {
-    return platforms
-      .filter((platform) =>
-        platform.platform.name
-          .toLowerCase()
-          .includes(wizardData.platform.toLowerCase()),
-      )
-      .map((platform) => platform.platform.name);
+    const searchPlatform = wizardData.platform.toLowerCase();
+
+    const filteredPlatforms = platforms.filter((platform) => {
+      const platformName = platform.platform.name.toLowerCase();
+      return platformName.includes(searchPlatform);
+    });
+
+    const platformNames = filteredPlatforms.map((name) => {
+      return name.platform.name;
+    });
+
+    return platformNames;
   };
 
   return (
@@ -246,31 +252,41 @@ function Results({ wizardData, times, energies, difficultyOptions }) {
 
       <div className="results-grid">
         {games.map((game) => {
+          const platforms = getPlatforms(game.platforms);
+
           return (
             <div key={game.id} className="result-card neon-blue">
               <img
                 src={game.background_image}
-                alt="CyberQuest"
+                alt={game.name}
                 className="card-img"
               />
+
               <div className="card-info">
                 <h3>{game.name}</h3>
                 <p>{game.description}</p>
+
                 <span className="platform-tag">
                   <i className="fa-solid fa-gamepad"></i>
-                  {getPlatforms(game.platforms)}
+                  {platforms.map((name) => (
+                    <span key={name}> {name} </span>
+                  ))}
                 </span>
               </div>
             </div>
           );
         })}
       </div>
+
       <p className="step-text">
         Estas recomendaciones se basan en tu tiempo disponible, tu energía
         mental y tu tipo de experiencia preferida.
       </p>
+
       <Link to="/">
-        <button className="next-btn neon-button">Buscar otra vez</button>
+        <button className="next-btn neon-button">
+          Buscar otra vez
+        </button>
       </Link>
     </section>
   );
