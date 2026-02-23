@@ -1,0 +1,58 @@
+.hero {
+  background-image: url("/portada.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 700px;
+}
+
+.hero-content {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Audiowide", cursive;
+}
+
+.hero-title {
+  width: 70%;
+  font-size: 70px;
+  text-align: center;
+  margin-top: 150px;
+}
+
+.hero-eslogan {
+  width: 50%;
+  font-size: 20px;
+  text-align: center;
+}
+
+.hero-button {
+  background: linear-gradient(90deg, #1b263b, #3a0ca3);
+  color: #fff;
+  font-family: "Audiowide", cursive;
+  font-size: 20px;
+  margin-top: 30px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 6px 12px rgba(58, 12, 163, 0.5);
+  transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px rgba(58, 12, 163, 0.7);
+  background: linear-gradient(90deg, #3a0ca3, #1b263b);
+}
+
+.fas {
+  font-size: 24px;
+  color: #fff;
+}
