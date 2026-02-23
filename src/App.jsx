@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import logo from "./assets/logowizard.png";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { getGames } from "./Services/services";
 
 function Header() {
   return (
@@ -29,9 +30,7 @@ function HeroSection({ handleStart }) {
   );
 }
 
-function TimeAvalaible({ wizardData, setWizardData }) {
-  const times = ["15 min", "30 min", "1 hora", "Más de 2 horas"];
-
+function TimeAvalaible({ wizardData, setWizardData, times }) {
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 1</h2>
@@ -43,7 +42,10 @@ function TimeAvalaible({ wizardData, setWizardData }) {
           <button
             key={duration}
             onClick={() =>
-              setWizardData((currentWizardData) => ({ ...currentWizardData, time: duration }))
+              setWizardData((currentWizardData) => ({
+                ...currentWizardData,
+                time: duration,
+              }))
             }
             className={`time-card ${wizardData.time === duration ? "active" : ""}`}
           >
@@ -60,14 +62,7 @@ function TimeAvalaible({ wizardData, setWizardData }) {
   );
 }
 
-function MentalEnergy({ wizardData, setWizardData }) {
-  const energies = [
-    { label: "Relajado", icon: "fa-solid fa-spa" },
-    { label: "Normal", icon: "fa-regular fa-face-smile" },
-    { label: "Con energía", icon: "fa-solid fa-bolt" },
-    { label: "A tope", icon: "fa-solid fa-fire" },
-  ];
-
+function MentalEnergy({ wizardData, setWizardData, energies }) {
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 2</h2>
@@ -79,7 +74,10 @@ function MentalEnergy({ wizardData, setWizardData }) {
           <button
             key={energy.label}
             onClick={() =>
-              setWizardData((currentWizardData) => ({ ...currentWizardData, energy: energy.label }))
+              setWizardData((currentWizardData) => ({
+                ...currentWizardData,
+                energy: energy.label,
+              }))
             }
             className={`time-card ${wizardData.energy === energy.label ? "active" : ""}`}
           >
@@ -98,9 +96,13 @@ function MentalEnergy({ wizardData, setWizardData }) {
 
 function GameplayType({ wizardData, setWizardData }) {
   const gameOptions = [
-    { label: "Solo", icon: "fa-solid fa-user" },
-    { label: "Multijugador", icon: "fa-solid fa-users" },
-    { label: "Cooperativo", icon: "fa-solid fa-handshake" },
+    { label: "Solo", icon: "fa-solid fa-user", type: "singleplayer" },
+    { label: "Multijugador", icon: "fa-solid fa-users", type: "multiplayer" },
+    {
+      label: "Cooperativo",
+      icon: "fa-solid fa-handshake",
+      type: "cooperative",
+    },
   ];
 
   return (
@@ -114,9 +116,12 @@ function GameplayType({ wizardData, setWizardData }) {
           <button
             key={type.label}
             onClick={() =>
-              setWizardData((currentWizardData) => ({ ...currentWizardData, gameType: type.label }))
+              setWizardData((currentWizardData) => ({
+                ...currentWizardData,
+                gameType: type.type,
+              }))
             }
-            className={`time-card ${wizardData.gameType === type.label ? "active" : ""}`}
+            className={`time-card ${wizardData.gameType === type.type ? "active" : ""}`}
           >
             <i className={`${type.icon} icons`}></i> {type.label}
           </button>
@@ -130,14 +135,7 @@ function GameplayType({ wizardData, setWizardData }) {
   );
 }
 
-function DifficultyLevel({ wizardData, setWizardData }) {
-  const difficultyOptions = [
-    { label: "Fácil", icon: "fa-solid fa-star" },
-    { label: "Media", icon: "fa-solid fa-star-half-stroke" },
-    { label: "Difícil", icon: "fa-solid fa-skull" },
-    { label: "Nivel Dios", icon: "fa-solid fa-crown" },
-  ];
-
+function DifficultyLevel({ wizardData, setWizardData, difficultyOptions }) {
   return (
     <section className="wizard-step">
       <h2 className="step-title">PASO 4</h2>
@@ -149,7 +147,10 @@ function DifficultyLevel({ wizardData, setWizardData }) {
           <button
             key={difficulty.label}
             onClick={() =>
-              setWizardData((currentWizardData) => ({ ...currentWizardData, difficulty: difficulty.label }))
+              setWizardData((currentWizardData) => ({
+                ...currentWizardData,
+                difficulty: difficulty.label,
+              }))
             }
             className={`time-card ${wizardData.difficulty === difficulty.label ? "active" : ""}`}
           >
@@ -166,7 +167,6 @@ function DifficultyLevel({ wizardData, setWizardData }) {
 }
 
 function GamingPlatform({ wizardData, setWizardData }) {
-  
   const platformOptions = [
     { label: "PC", icon: "fa-brands fa-windows" },
     { label: "PlayStation", icon: "fa-brands fa-playstation" },
@@ -185,7 +185,10 @@ function GamingPlatform({ wizardData, setWizardData }) {
           <button
             key={platform.label}
             onClick={() =>
-              setWizardData((currentWizardData) => ({ ...currentWizardData, platform: platform.label }))
+              setWizardData((currentWizardData) => ({
+                ...currentWizardData,
+                platform: platform.label,
+              }))
             }
             className={`time-card ${wizardData.platform === platform.label ? "active" : ""}`}
           >
@@ -201,58 +204,67 @@ function GamingPlatform({ wizardData, setWizardData }) {
   );
 }
 
-function Results({ wizardData }) {
+function Results({ wizardData, times, energies, difficultyOptions }) {
+  const genreGames = ["puzzle", "action", "rpg"];
+
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const genreNames = genreGames.map((g) => g);
+      const data = await getGames();
+
+      const filteredGames = data.filter(
+        (game) =>
+          game.genres.some((g) => genreNames.includes(g.slug)) &&
+          game.tags.some((tag) => tag.slug === wizardData.gameType) &&
+          times.includes(wizardData.time) &&
+          energies.some((e) => e.label === wizardData.energy) &&
+          difficultyOptions.some((d) => d.label === wizardData.difficulty),
+      );
+
+      setGames(filteredGames.slice(0, 3));
+    };
+
+    fetchData();
+  }, [wizardData]);
+
+  const getPlatforms = (platforms) => {
+    return platforms
+      .filter((platform) =>
+        platform.platform.name
+          .toLowerCase()
+          .includes(wizardData.platform.toLowerCase()),
+      )
+      .map((platform) => platform.platform.name);
+  };
+
   return (
     <section className="wizard-step results-page">
       <h2 className="step-title glow-text">¡Recomendaciones listas!</h2>
       <h1 className="step-subtitle">Juegos recomendados para ti</h1>
 
       <div className="results-grid">
-        <div className="result-card neon-blue">
-          <img src={logo} alt="CyberQuest" className="card-img" />
-          <div className="card-info">
-            <h3>CyberQuest</h3>
-            <p>
-              Un juego de acción y aventura pensado para tu energía y tiempo
-              disponible.
-            </p>
-            <span className="platform-tag">
-              <i className="fa-solid fa-gamepad"></i> PC
-            </span>
-          </div>
-        </div>
-
-        <div className="result-card neon-purple">
-          <img
-            src="/images/galaxy-fighters.jpg"
-            alt="Galaxy Fighters"
-            className="card-img"
-          />
-          <div className="card-info">
-            <h3>Galaxy Fighters</h3>
-            <p>Acción cooperativa online, ideal para partidas rápidas.</p>
-            <span className="platform-tag">
-              <i className="fa-solid fa-gamepad"></i> PlayStation
-            </span>
-          </div>
-        </div>
-
-        <div className="result-card neon-orange">
-          <img
-            src="/images/kingdom-story.jpg"
-            alt="Kingdom Story"
-            className="card-img"
-          />
-          <div className="card-info">
-            <h3>Kingdom Story</h3>
-            <p>Perfecto para relajarte y explorar mundos de fantasía.</p>
-            <span className="platform-tag">
-              <i className="fa-solid fa-gamepad"></i> Switch
-            </span>
-          </div>
-        </div>
+        {games.map((game) => {
+          return (
+            <div key={game.id} className="result-card neon-blue">
+              <img
+                src={game.background_image}
+                alt="CyberQuest"
+                className="card-img"
+              />
+              <div className="card-info">
+                <h3>{game.name}</h3>
+                <p>{game.description}</p>
+                <span className="platform-tag">
+                  <i className="fa-solid fa-gamepad"></i>
+                  {getPlatforms(game.platforms)}
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
-
       <p className="step-text">
         Estas recomendaciones se basan en tu tiempo disponible, tu energía
         mental y tu tipo de experiencia preferida.
@@ -272,8 +284,21 @@ function App() {
     energy: "",
     gameType: "",
     difficulty: "",
-    platform: ""
+    platform: "",
   });
+  const times = ["15 min", "30 min", "1 hora", "Más de 2 horas"];
+  const energies = [
+    { label: "Relajado", icon: "fa-solid fa-spa" },
+    { label: "Normal", icon: "fa-regular fa-face-smile" },
+    { label: "Con energía", icon: "fa-solid fa-bolt" },
+    { label: "A tope", icon: "fa-solid fa-fire" },
+  ];
+  const difficultyOptions = [
+    { label: "Fácil", icon: "fa-solid fa-star" },
+    { label: "Media", icon: "fa-solid fa-star-half-stroke" },
+    { label: "Difícil", icon: "fa-solid fa-skull" },
+    { label: "Nivel Dios", icon: "fa-solid fa-crown" },
+  ];
 
   const handleStart = () => {
     setPulsed(false);
@@ -295,29 +320,66 @@ function App() {
         />
         <Route
           path="/time-available"
-          element={<TimeAvalaible wizardData={wizardData} setWizardData={setWizardData} />}
+          element={
+            <TimeAvalaible
+              wizardData={wizardData}
+              setWizardData={setWizardData}
+              times={times}
+            />
+          }
         />
         <Route
           path="/mental-energy"
-          element={<MentalEnergy wizardData={wizardData} setWizardData={setWizardData} />}
+          element={
+            <MentalEnergy
+              wizardData={wizardData}
+              setWizardData={setWizardData}
+              energies={energies}
+            />
+          }
         />
         <Route
           path="/game-type"
-          element={<GameplayType wizardData={wizardData} setWizardData={setWizardData} />}
+          element={
+            <GameplayType
+              wizardData={wizardData}
+              setWizardData={setWizardData}
+            />
+          }
         />
         <Route
           path="/difficulty-level"
-          element={<DifficultyLevel wizardData={wizardData} setWizardData={setWizardData} />}
+          element={
+            <DifficultyLevel
+              wizardData={wizardData}
+              setWizardData={setWizardData}
+              difficultyOptions={difficultyOptions}
+            />
+          }
         />
         <Route
           path="/gaming-platform"
-          element={<GamingPlatform wizardData={wizardData} setWizardData={setWizardData} />}
+          element={
+            <GamingPlatform
+              wizardData={wizardData}
+              setWizardData={setWizardData}
+            />
+          }
         />
-        <Route path="/results" element={<Results wizardData={wizardData} />} />
+        <Route
+          path="/results"
+          element={
+            <Results
+              wizardData={wizardData}
+              times={times}
+              energies={energies}
+              difficultyOptions={difficultyOptions}
+            />
+          }
+        />
       </Routes>
     </>
   );
 }
-
 
 export default App;
