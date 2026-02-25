@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
+import "./GamingPlatform.css"
 
 function GamingPlatform() {
   const { wizardData, setWizardData, platformOptions } =
@@ -22,7 +23,7 @@ function GamingPlatform() {
                 platform: platform.label,
               }))
             }
-            className={`time-card ${wizardData.platform === platform.label ? "active" : ""}`}
+            className={`time-card ${wizardData.platform === platform.label && "active"}`}
           >
             <i className={`${platform.icon} icons`}></i> {platform.label}
           </button>

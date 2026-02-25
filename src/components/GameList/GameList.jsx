@@ -1,36 +1,72 @@
 import { useState, useEffect, useContext } from "react";
-import { getGames } from "../Services/services";
+import { getGames } from "../../Services/services";
 import "./GameList.css";
 import { Link } from "react-router-dom";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
 
 function GameList() {
-  const genreGames = ["puzzle", "action", "rpg"];
+  const GENRE_NAMES = [
+    "action",
+    "indie",
+    "adventure",
+    "role-playing-games-rpg",
+    "strategy",
+    "shooter",
+    "casual",
+    "simulation",
+    "puzzle",
+    "arcade",
+    "platformer",
+    "massively-multiplayer",
+    "racing",
+    "sports",
+    "fighting",
+    "family",
+    "board-games",
+    "educational",
+    "card",
+  ];
   const [games, setGames] = useState([]);
   const { wizardData, times, energies, difficultyOptions } =
     useContext(gameContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getGames();
+  const fetchData = async () => {
+    const data = await getGames();
 
-      const filteredGames = data.filter((game) => {
-        return (
-          game.genres.some((g) => genreGames.includes(g.slug)) &&
-          game.tags.some((tag) => tag.slug === wizardData.gameType) &&
-          times.includes(wizardData.time) &&
-          energies.some((energy) => energy.label === wizardData.energy) &&
-          difficultyOptions.some(
-            (difficulty) => difficulty.label === wizardData.difficulty,
-          )
-        );
-      });
+    const filteredGames = data.filter((game) => {
+      const matchesGenre = game.genres?.some((genre) =>
+        GENRE_NAMES.includes(genre.slug)
+      );
 
-      setGames(filteredGames.slice(0, 3));
-    };
+      const matchesTag = game.tags?.some(
+        (tag) => tag.slug === wizardData.gameType
+      );
 
-    fetchData();
-  }, []);
+      const matchesTime = times.includes(wizardData.time);
+
+      const matchesEnergy = energies.some(
+        (energy) => energy.label === wizardData.energy
+      );
+
+      const matchesDifficulty = difficultyOptions.some(
+        (difficulty) => difficulty.label === wizardData.difficulty
+      );
+
+      return (
+        matchesGenre &&
+        matchesTag &&
+        matchesTime &&
+        matchesEnergy &&
+        matchesDifficulty
+      );
+    });
+
+    setGames(filteredGames.slice(0, 3));
+  };
+
+  fetchData();
+}, [wizardData]);
 
   const getPlatforms = (platforms) => {
     const searchPlatform = wizardData.platform.toLowerCase();

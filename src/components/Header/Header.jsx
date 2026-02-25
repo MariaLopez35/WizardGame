@@ -1,4 +1,4 @@
-import logo from "../assets/logowizard.png";
+import logo from "../../assets/logowizard.png";
 import "./Header.css";
 
 function Header() {

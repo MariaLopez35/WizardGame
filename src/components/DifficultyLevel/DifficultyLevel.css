@@ -1,0 +1,102 @@
+.wizard-step {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0d1b2a, #1b263b);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Audiowide", cursive;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.step-title {
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: #3a0ca3;
+  margin-bottom: 10px;
+}
+
+.step-subtitle {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.step-question {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 40px;
+}
+
+.options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+.time-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #1b263b, #3a0ca3);
+  border: 2px solid #3a0ca3;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 12px;
+  flex: 1 1 calc(50% - 20px);
+  max-width: calc(50% - 20px);
+}
+
+.time-card:hover {
+  background: linear-gradient(90deg, #3a0ca3, #1b263b);
+  transform: translateY(-4px);
+}
+
+.time-card.active {
+  background: linear-gradient(90deg, #3a0ca3, #1b263b);
+  border: 2px solid #00d4ff;
+  box-shadow:
+    0 0 10px #00d4ff,
+    0 0 20px #3a0ca3aa;
+  transform: scale(1.05);
+}
+
+.time-card.active:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 15px #00d4ff,
+    0 0 30px #3a0ca3;
+}
+
+.next-btn {
+  background: #3a0ca3;
+  border: none;
+  color: white;
+  font-family: "Orbitron", sans-serif;
+  font-size: 16px;
+  padding: 14px 40px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.next-btn:hover {
+  background: #4f1dd4;
+  transform: scale(1.05);
+}
+
+.icons {
+  font-size: 30px;
+  padding-right: 10px;
+}

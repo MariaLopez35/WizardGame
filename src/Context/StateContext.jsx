@@ -5,7 +5,7 @@ function StateContext({ children }) {
   const [pulsed, setPulsed] = useState(true);
   const times = ["15 min", "30 min", "1 hora", "Más de 2 horas"];
   const [wizardData, setWizardData] = useState({
-    time: "",
+    time: 0,
     energy: "",
     gameType: "",
     difficulty: "",

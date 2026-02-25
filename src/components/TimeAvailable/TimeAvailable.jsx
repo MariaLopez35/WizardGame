@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
+import "./TimeAvailable.css"
 
 function TimeAvalaible() {
   const { wizardData, setWizardData, times } = useContext(gameContext);
@@ -21,7 +22,7 @@ function TimeAvalaible() {
                 time: duration,
               }))
             }
-            className={`time-card ${wizardData.time === duration ? "active" : ""}`}
+            className={`time-card ${wizardData.time === duration && "active"}`}
           >
             <i className="fa-solid fa-clock icons"></i>
             {duration}
