@@ -1,7 +1,7 @@
 import "./HeroSection.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
 
 function HeroSection() {
   const { handleStart } = useContext(gameContext);

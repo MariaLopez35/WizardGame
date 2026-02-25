@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
+import "./GamePlayType.css"
 
 function GamePlayType() {
   const { wizardData, setWizardData, gameOptions } = useContext(gameContext);
@@ -21,7 +22,7 @@ function GamePlayType() {
                 gameType: type.type,
               }))
             }
-            className={`time-card ${wizardData.gameType === type.type ? "active" : ""}`}
+            className={`time-card ${wizardData.gameType === type.type && "active"}`}
           >
             <i className={`${type.icon} icons`}></i> {type.label}
           </button>

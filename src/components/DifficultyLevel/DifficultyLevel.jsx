@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
+import "./DifficultyLevel.css"
 
 function DifficultyLevel() {
   const { wizardData, setWizardData, difficultyOptions } =
@@ -22,7 +23,7 @@ function DifficultyLevel() {
                 difficulty: difficulty.label,
               }))
             }
-            className={`time-card ${wizardData.difficulty === difficulty.label ? "active" : ""}`}
+            className={`time-card ${wizardData.difficulty === difficulty.label && "active" }`}
           >
             <i className={`${difficulty.icon} icons`}></i> {difficulty.label}
           </button>

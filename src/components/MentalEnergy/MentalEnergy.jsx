@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { gameContext } from "../Context/gameContext";
+import { gameContext } from "../../Context/gameContext";
+import "./MentalEnergy.css"
 
 function MentalEnergy() {
   const { wizardData, setWizardData, energies } = useContext(gameContext);
@@ -21,7 +22,7 @@ function MentalEnergy() {
                 energy: energy.label,
               }))
             }
-            className={`time-card ${wizardData.energy === energy.label ? "active" : ""}`}
+            className={`time-card ${wizardData.energy === energy.label && "active"}`}
           >
             <i className={`${energy.icon} icons`}></i>
             {energy.label}

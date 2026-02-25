@@ -1,13 +1,13 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Header from "./Header/Header";
-import HeroSection from "./HeroSection/HeroSection";
-import TimeAvalaible from "./TimeAvailable/TimeAvailable";
-import MentalEnergy from "./MentalEnergy/MentalEnergy";
-import GamePlayType from "./GamePlayType/GamePlayType";
-import DifficultyLevel from "./DifficultyLevel/DifficultyLevel";
-import GamingPlatform from "./GamingPlatform/GamingPlatform";
-import GameList from "./GameList/GameList";
+import Header from "./components/Header/Header";
+import HeroSection from "./components/HeroSection/HeroSection";
+import TimeAvalaible from "./components/TimeAvailable/TimeAvailable";
+import MentalEnergy from "./components/MentalEnergy/MentalEnergy";
+import GamePlayType from "./components/GamePlayType/GamePlayType";
+import DifficultyLevel from "./components/DifficultyLevel/DifficultyLevel";
+import GamingPlatform from "./components/GamingPlatform/GamingPlatform";
+import GameList from "./components/GameList/GameList";
 import { useContext } from "react";
 import { gameContext } from "./Context/gameContext";
 
